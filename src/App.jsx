@@ -5,11 +5,16 @@ import {
   createContext,
   lazy,
   Suspense,
+  Routes,
+  Route
 } from "react";
 import ThemeToggle from "./components/ThemeToggle";
 import SearchBar from "./components/SearchBar";
 import FilterBar from "./components/FilterBar";
+import Slide from "react-reveal/Slide";
 // import Country from "./components/Country";
+import spinner from './assets/Broken-circle-unscreen.gif'
+
 
 // Sharing Theme context
 export const ThemeContext = createContext();
@@ -18,7 +23,7 @@ function App() {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "Light");
   const [themeText, setThemeText] = useState("Dark Mode");
   const [getCountries, setGetCountries] = useState([]);
-  const [getCountry, setGetCountry] = useState("/");
+  const [getCountry, setGetCountry] = useState("");
   const [getRegion, setGetRegion] = useState("");
 
   function toggletheme() {
@@ -31,23 +36,69 @@ function App() {
     }
   }
 
-  //restcountries.com/v3.1/all/region/{africa}/name/{nigeria}
+  //`https://restcountries.com/v3.1/all/name/${getCountry}`
+  // https://restcountries.com/v3.1/${all}
+  // https://restcountries.com/v3.1/name/${peru}
+  // https://restcountries.com/v3.1/region/${asia}
 
   // Keep Theme Persistent after reload
   useEffect(() => {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
+  // Getting Data for specific country
+  async function getCountryData() {
+    try {
+      let res = await fetch(
+        `https://restcountries.com/v3.1/name/${getCountry}`
+      );
+      let data = await res.json();
+      setGetCountries(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  // Getting Data for region/continents
+  async function getFilteredCountriesData() {
+    try {
+      let res = await fetch(
+        `https://restcountries.com/v3.1/region/${getRegion}`
+      );
+      let data = await res.json();
+      setGetCountries(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   // Fetching Countries Data
   useEffect(() => {
-    fetch(`https://restcountries.com/v3.1/all`)
-      .then((res) => res.json())
-      .then((data) => {
-        setGetCountries(data);
-        // console.log(data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+    if (getCountry === "" && getRegion === "") {
+      fetch(`https://restcountries.com/v3.1/all`)
+        .then((res) => res.json())
+        .then((data) => {
+          setGetCountries(data);
+        })
+        .catch((err) => console.error(err));
+    } else if (getCountry !== "" && getRegion === "") {
+      getCountryData();
+    } else {
+      getFilteredCountriesData();
+    };
+
+  }, [getCountry, getRegion]);
+
+  // Fetching Country Search Data
+  // useEffect(() => {
+  //   fetch(`https://restcountries.com/v3.1/name/${getCountry}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setGetCountries(data);
+  //       // console.log(data);
+  //     })
+  //     .catch((err) => console.error(err));
+  // }, [getCountry]);
 
   const Country = lazy(() => import("./components/Country"));
 
@@ -68,16 +119,28 @@ function App() {
           themeText={themeText}
         />
         <div className="w-full md:flex justify-between items-center  md:pt-32">
-          <SearchBar />
-          <FilterBar />
+          <SearchBar searchTerm={(term) => setGetCountry(term)} />
+          <FilterBar filterTerm={(term) => setGetRegion(term)} />
         </div>
+       
         <div className="grid mt-6 md:grid-cols-3 gap-4 md:place-items-center lg:grid-cols-4">
           {getCountries.map((country) => {
-            return(
-            <Suspense key={country.name.official} fallback={<h1 className="mx-auto text-2xl h-screen">Fetching Country. . .</h1>}>
-              <Country country={country} />
-            </Suspense>);
-            // return <Country country={country} />;
+            return (
+              <Suspense
+                key={country.name.official}
+                fallback={
+                    <img
+                      src={spinner}
+                      alt="preloader-spinner"
+                      className="mx-auto text-2xl w-12 h-12"
+                    />
+                }
+              >
+                <Slide bottom>
+                  <Country country={country} />
+                </Slide>
+              </Suspense>
+            );
           })}
         </div>
       </div>

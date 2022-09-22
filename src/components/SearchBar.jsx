@@ -3,13 +3,14 @@ import { ThemeContext } from "../App";
 import search_dark from "../assets/search_icon-dark.png";
 import search_light from "../assets/search_icon-light.png";
 
-function SearchBar() {
-  const [userValue, setUserValue] = useState('')
+function SearchBar({searchTerm}) {
+  // const [userValue, setUserValue] = useState('')
+
     let styles = "w-full py-4 pl-20 pr-6 relative shadow-md outline-none font-medium rounded-md "
     const theme = useContext(ThemeContext);
 
     const handleChange = (e) => {
-      setUserValue(e.target.value);
+      searchTerm(e.target.value);
 
     }
 
