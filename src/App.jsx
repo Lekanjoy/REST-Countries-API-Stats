@@ -5,16 +5,14 @@ import {
   createContext,
   lazy,
   Suspense,
-  Routes,
-  Route
 } from "react";
+import { Link, Routes, Route } from "react-router-dom";
 import ThemeToggle from "./components/ThemeToggle";
 import SearchBar from "./components/SearchBar";
 import FilterBar from "./components/FilterBar";
+import CountryDetails from "./components/CountryDetails";
 import Slide from "react-reveal/Slide";
-// import Country from "./components/Country";
-import spinner from './assets/Broken-circle-unscreen.gif'
-
+import spinner from "./assets/spinner.gif";
 
 // Sharing Theme context
 export const ThemeContext = createContext();
@@ -35,11 +33,6 @@ function App() {
       setThemeText("Dark Mode");
     }
   }
-
-  //`https://restcountries.com/v3.1/all/name/${getCountry}`
-  // https://restcountries.com/v3.1/${all}
-  // https://restcountries.com/v3.1/name/${peru}
-  // https://restcountries.com/v3.1/region/${asia}
 
   // Keep Theme Persistent after reload
   useEffect(() => {
@@ -79,26 +72,15 @@ function App() {
         .then((res) => res.json())
         .then((data) => {
           setGetCountries(data);
+          // console.log(data);
         })
         .catch((err) => console.error(err));
     } else if (getCountry !== "" && getRegion === "") {
       getCountryData();
     } else {
       getFilteredCountriesData();
-    };
-
+    }
   }, [getCountry, getRegion]);
-
-  // Fetching Country Search Data
-  // useEffect(() => {
-  //   fetch(`https://restcountries.com/v3.1/name/${getCountry}`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setGetCountries(data);
-  //       // console.log(data);
-  //     })
-  //     .catch((err) => console.error(err));
-  // }, [getCountry]);
 
   const Country = lazy(() => import("./components/Country"));
 
@@ -120,24 +102,32 @@ function App() {
         />
         <div className="w-full md:flex justify-between items-center  md:pt-32">
           <SearchBar searchTerm={(term) => setGetCountry(term)} />
-          <FilterBar filterTerm={(term) => setGetRegion(term)} />
+          <FilterBar
+            setGetCountries={setGetCountries}
+            filterTerm={(term) => setGetRegion(term)}
+          />
         </div>
-       
+
+        {/* <Routes>
+          <Route path="/detail" element={<CountryDetails />}></Route>
+        </Routes> */}
         <div className="grid mt-6 md:grid-cols-3 gap-4 md:place-items-center lg:grid-cols-4">
           {getCountries.map((country) => {
             return (
               <Suspense
                 key={country.name.official}
                 fallback={
-                    <img
-                      src={spinner}
-                      alt="preloader-spinner"
-                      className="mx-auto text-2xl w-12 h-12"
-                    />
+                  <img
+                    src={spinner}
+                    alt="preloader-spinner"
+                    className="mx-auto text-2xl w-12 h-12"
+                  />
                 }
               >
                 <Slide bottom>
-                  <Country country={country} />
+                  {/* <Link to="/detail"> */}
+                    <Country country={country} />
+                  {/* </Link> */}
                 </Slide>
               </Suspense>
             );

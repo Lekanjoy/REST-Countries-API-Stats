@@ -14,7 +14,7 @@ function Country({ country }) {
         alt="flag"
         className="w-full rounded-md h-52 mb-4 cursor-pointer"
       />
-      <div className="px-4 pt-3 pb-12">
+      <div className="px-4 pt-3 pb-10">
         <h1 className="text-xl font-semibold mb-3">{country.name.official}</h1>
         <p className="mb-1 ">
           Population:{" "}
