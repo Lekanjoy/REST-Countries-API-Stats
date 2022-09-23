@@ -1,18 +1,10 @@
-import {
-  useState,
-  useEffect,
-  useContext,
-  createContext,
-  lazy,
-  Suspense,
-} from "react";
+import { useState, useEffect, createContext, lazy, Suspense } from "react";
 import { Link, Routes, Route } from "react-router-dom";
 import ThemeToggle from "./components/ThemeToggle";
 import SearchBar from "./components/SearchBar";
 import FilterBar from "./components/FilterBar";
+import Countries from "./components/Countries";
 import CountryDetails from "./components/CountryDetails";
-import Slide from "react-reveal/Slide";
-import spinner from "./assets/spinner.gif";
 
 // Sharing Theme context
 export const ThemeContext = createContext();
@@ -24,6 +16,7 @@ function App() {
   const [getCountry, setGetCountry] = useState("");
   const [getRegion, setGetRegion] = useState("");
 
+  // Toggle Theme
   function toggletheme() {
     if (theme == "Dark") {
       setTheme("Light");
@@ -82,9 +75,7 @@ function App() {
     }
   }, [getCountry, getRegion]);
 
-  const Country = lazy(() => import("./components/Country"));
-
-  const style = "App w-full h-full  px-6 pb-6 relative";
+  const style = "App w-full h-full  px-6 pb-6 relative lg:px-12";
 
   return (
     <ThemeContext.Provider value={theme}>
@@ -107,31 +98,8 @@ function App() {
             filterTerm={(term) => setGetRegion(term)}
           />
         </div>
-
-        {/* <Routes>
-          <Route path="/detail" element={<CountryDetails />}></Route>
-        </Routes> */}
         <div className="grid mt-6 md:grid-cols-3 gap-4 md:place-items-center lg:grid-cols-4">
-          {getCountries.map((country) => {
-            return (
-              <Suspense
-                key={country.name.official}
-                fallback={
-                  <img
-                    src={spinner}
-                    alt="preloader-spinner"
-                    className="mx-auto text-2xl w-12 h-12"
-                  />
-                }
-              >
-                <Slide bottom>
-                  {/* <Link to="/detail"> */}
-                    <Country country={country} />
-                  {/* </Link> */}
-                </Slide>
-              </Suspense>
-            );
-          })}
+          <Countries getCountries={getCountries} />
         </div>
       </div>
     </ThemeContext.Provider>

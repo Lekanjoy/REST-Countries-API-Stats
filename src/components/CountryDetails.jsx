@@ -4,6 +4,7 @@ import { ThemeContext } from "../App";
 import previous_light from "../assets/back-light.png";
 import previous_dark from "../assets/back-dark.png";
 import flag from '../assets/flag.png'
+import App from "../App";
 
 
 
@@ -12,21 +13,23 @@ function CountryDetails() {
 
   return (
     <section className="mt-12 w-full h-auto">
-      <div
-        className={
-          theme === "Dark"
-            ? ` py-1 px-5  w-fit rounded-md flex items-center gap-x-1 bg-DarkBlue`
-            : `py-1 px-5 w-fit  rounded-md flex items-center gap-x-1 bg-White`
-        }
-      >
-        <img
-          src={theme === "Dark" ? previous_dark : previous_light}
-          alt="refresh icon"
-          className="w-7 h-7  duration-700 cursor-pointer"
-          id="refresh"
-        />
-        Back
-      </div>
+        <Link to='/'>
+          <div
+            className={
+              theme === "Dark"
+                ? ` py-1 px-5  w-fit rounded-md flex items-center gap-x-1 cursor-pointer bg-DarkBlue`
+                : `py-1 px-5 w-fit  rounded-md flex items-center gap-x-1 cursor-pointer bg-White`
+            }
+          >
+            <img
+              src={theme === "Dark" ? previous_dark : previous_light}
+              alt="refresh icon"
+              className="w-7 h-7  duration-700 cursor-pointer"
+              id="refresh"
+            />
+            Back
+          </div>
+        </Link>
 
       <div className="flex flex-col flex-1 gap-x-8  w-full  mt-16 md:flex-row  md:justify-between md:items-center lg:gap-x-6">
         <div className=" w-full md:w-1/2">
@@ -55,7 +58,8 @@ function CountryDetails() {
                     Region: <span className="opacity-75">Europe</span>
                   </p>
                   <p className="mb-2 font-medium">
-                    Sub Region: <span className="opacity-75">Western Europe</span>
+                    Sub Region:{" "}
+                    <span className="opacity-75">Western Europe</span>
                   </p>
                   <p className="mb-2 font-medium">
                     Capital: <span className="opacity-75">Brussels</span>
@@ -69,7 +73,8 @@ function CountryDetails() {
                     Currencies: <span className="opacity-75">Euro</span>
                   </p>
                   <p className="mb-2 font-medium whitespace-nowrap">
-                    Languages: <span className="opacity-75">Dutch, French, German</span>
+                    Languages:{" "}
+                    <span className="opacity-75">Dutch, French, German</span>
                   </p>
                 </div>
               </div>
