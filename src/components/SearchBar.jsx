@@ -11,6 +11,8 @@ function SearchBar({searchTerm}) {
 
     const handleChange = (e) => {
       searchTerm(e.target.value);
+      // let value = e.target.value;
+      // console.log(value.toLowerCase());
 
     }
 

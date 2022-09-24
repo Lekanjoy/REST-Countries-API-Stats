@@ -12,11 +12,9 @@ function FilterBar({ filterTerm, setGetCountries }) {
 
   const handleFilter = (e) => {
     filterTerm(e.target.value);
-    // console.log(e.target.value);
   };
 
   const handleRefresh = () => {
-    // document.getElementById("refresh").classList.toggle("-rotate-180");
     setIsRefreshed((prevState) => !prevState);
   };
 
@@ -56,7 +54,7 @@ function FilterBar({ filterTerm, setGetCountries }) {
           onClick={handleRefresh}
           src={theme === "Dark" ? Refresh_dark : Refresh_light}
           alt="refresh icon"
-          className="w-8 h-8  duration-700 cursor-pointer"
+          className="w-8 h-8  duration-700 cursor-pointer hover:-rotate-180"
           id="refresh"
         />
       </div>

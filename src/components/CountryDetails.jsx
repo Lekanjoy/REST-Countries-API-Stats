@@ -1,18 +1,19 @@
 import { useContext } from "react";
-import { Link, Routes, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ThemeContext } from "../App";
 import previous_light from "../assets/back-light.png";
 import previous_dark from "../assets/back-dark.png";
 import flag from '../assets/flag.png'
-import App from "../App";
 
 
 
-function CountryDetails() {
+
+function CountryDetails({country}) {
+  // console.log(country);
   const theme = useContext(ThemeContext);
 
   return (
-    <section className="mt-12 w-full h-auto">
+    <section className="pt-32 w-full md:h-screen">
         <Link to='/'>
           <div
             className={
