@@ -57,13 +57,14 @@ function Countries() {
       console.error(error);
     }
   }
+ 
 
   // Fetching Country(ies) Data
   useEffect(() => {
     if (getCountry === "" && getRegion === "") {
       getAllCountriesData();
     } else if (getCountry !== "" && getRegion === "") {
-      getCountryData();
+      getCountryData(); 
     } else {
       getFilteredCountriesData();
     }

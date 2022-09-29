@@ -3,15 +3,17 @@ import { Link, useParams } from "react-router-dom";
 import { ThemeContext } from "../App";
 import previous_light from "../assets/back-light.png";
 import previous_dark from "../assets/back-dark.png";
-import spinner from '../assets/spinner.gif'
+import spinner from "../assets/spinner.gif";
 
 function CountryDetails() {
   const [country, setCountry] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const theme = useContext(ThemeContext);
 
   let { countryCode } = useParams();
-
   let code = JSON.stringify(countryCode).replace(/['"]+/g, "");
+  let currenciesArr = [];
+  let languageArr = [];
 
   useEffect(() => {
     const fetchCountry = async () => {
@@ -26,10 +28,6 @@ function CountryDetails() {
     fetchCountry();
   }, [countryCode]);
 
-  const theme = useContext(ThemeContext);
-
-  let currenciesArr = [];
-  let languageArr = [];
   return (
     <section className="pt-32 max-w-full">
       <Link className="inline-flex" to="/">
@@ -51,7 +49,11 @@ function CountryDetails() {
       </Link>
 
       {isLoading ? (
-        <img src={spinner} alt="loading-spinner" className="w-12 h-12 mx-auto relative top-[25vh]"/>
+        <img
+          src={spinner}
+          alt="loading-spinner"
+          className="w-12 h-12 mx-auto relative top-[25vh]"
+        />
       ) : (
         <div className="flex flex-col flex-1 gap-x-8  w-full  mt-16 md:flex-row  md:justify-between md:items-center lg:gap-x-6">
           <div className=" w-full md:w-1/2">
@@ -117,7 +119,9 @@ function CountryDetails() {
                           ? "Currency: "
                           : "Currencies: "}
                       </span>
-                      <span className="opacity-75">{currenciesArr.join(", ")}</span>
+                      <span className="opacity-75">
+                        {currenciesArr.join(", ")}
+                      </span>
                     </p>
                     <p className="mb-2 font-medium whitespace-nowrap">
                       <span className="hidden">
@@ -132,29 +136,38 @@ function CountryDetails() {
                           ? "Language: "
                           : "Languages: "}
                       </span>
-                      <span className="opacity-75">{languageArr.join(", ")}</span>
+                      <span className="opacity-75">
+                        {languageArr.join(", ")}
+                      </span>
                     </p>
                   </div>
                 </div>
                 <div className=" w-full my-6 items-center  md:mt-12 md:flex md:gap-x-2">
-                  <p className=" mr-2 mb-4 md:mb-0 whitespace-nowrap">Border Countries: </p>
+                  <p className=" mr-2 mb-4 md:mb-0 whitespace-nowrap">
+                    Border Countries:{" "}
+                  </p>
                   <div className=" w-full h-auto grid grid-cols-4 gap-x-16 gap-y-3 md:flex md:flex-wrap md:gap-3">
-                    { country.borders ? country.borders.map(border => {
-                      return (
-                        <Link to={`/detail/${border}`} key={border}>
-                          <p
-                            className={
-                              theme === "Dark"
-                                ? ` py-1 px-3  shadow-md  w-fit rounded-md    bg-DarkBlue`
-                                : `py-1 px-3 w-fit shadow-md  rounded-md  bg-White`
-                            }
-                          >
-                            {border}
-                          </p>
-                        </Link>
-                      );
-
-                    }) : <span className="block whitespace-nowrap text-sm opacity-75">{country.name.common} has no border countries</span>}
+                    {country.borders ? (
+                      country.borders.map((border) => {
+                        return (
+                          <Link to={`/detail/${border}`} key={border}>
+                            <p
+                              className={
+                                theme === "Dark"
+                                  ? ` py-1 px-3  shadow-md  w-fit rounded-md    bg-DarkBlue`
+                                  : `py-1 px-3 w-fit shadow-md  rounded-md  bg-White`
+                              }
+                            >
+                              {border}
+                            </p>
+                          </Link>
+                        );
+                      })
+                    ) : (
+                      <span className="block whitespace-nowrap text-sm opacity-75">
+                        {country.name.common} has no border countries
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>

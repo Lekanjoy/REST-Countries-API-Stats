@@ -15,10 +15,12 @@ function FilterBar({
   const style =
     " py-4 pl-6 pr-8 w-fit font-medium shadow-sm rounded-md cursor-pointer outline-none md:w-52 ";
 
+  // Getting User filter value amd setting it to the filterTerm
   const handleFilter = (e) => {
     filterTerm(e.target.value);
   };
 
+  // Setting all values/fields to default
   const handleRefresh = () => {
     setIsRefreshed((prevState) => !prevState);
     setGetCountry("");
@@ -29,8 +31,9 @@ function FilterBar({
     filter.value = "Filter by Region";
   };
 
+  // Calling the countries function whenever refresh button is clicked
   useEffect(() => {
-  getAllCountriesData();
+    getAllCountriesData();
   }, [isRefreshed]);
 
   return (
@@ -54,8 +57,8 @@ function FilterBar({
       <div
         className={
           theme === "Dark"
-            ? ` p-3   rounded-md bg-DarkBlue`
-            : `p-3  rounded-md bg-White`
+            ? ` p-3 shadow-sm   rounded-md bg-DarkBlue`
+            : `p-3  shadow-sm rounded-md bg-White`
         }
       >
         <img

@@ -3,21 +3,20 @@ import { ThemeContext } from "../App";
 import search_dark from "../assets/search_icon-dark.png";
 import search_light from "../assets/search_icon-light.png";
 
-function SearchBar({searchTerm}) {
-    let styles = "w-full py-4 pl-20 pr-6 relative shadow-md outline-none font-medium rounded-md "
-    const theme = useContext(ThemeContext);
-    const [searchValue,setSearchValue] = useState('')
+function SearchBar({ searchTerm }) {
+  let styles =
+    "w-full py-4 pl-20 pr-6 relative shadow-md outline-none font-medium rounded-md ";
+  const theme = useContext(ThemeContext);
 
-    const handleChange = (e) => {
-      searchTerm(e.target.value);
-      // setSearchValue(e.target.value);
-    }
+  // Getting User search value amd setting it to the searchTerm
+  const handleChange = (e) => {
+    searchTerm(e.target.value);
+  };
 
   return (
     <div className="w-full pt-[8rem] mb-10 relative md:w-2/5 md:mb-0 md:pt-0">
       <input
         id="search"
-        // value={searchValue}
         onChange={handleChange}
         type="search"
         placeholder="Search for a country..."

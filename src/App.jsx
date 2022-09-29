@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import ThemeToggle from "./components/ThemeToggle";
 import Countries from "./components/Countries";
 import CountryDetails from "./components/CountryDetails";
+import Error_404 from "./components/Error_404";
 
 // Sharing Theme context
 export const ThemeContext = createContext();
@@ -46,14 +47,7 @@ function App() {
         <Routes>
           <Route index path="/" element={<Countries />} />
           <Route path="/detail/:countryCode" element={<CountryDetails />} />
-          <Route
-            path="*"
-            element={
-              <h1 className="pt-[40vh] h-screen text-4xl font-bold text-center">
-                404 Page
-              </h1>
-            }
-          />
+          <Route path="*" element={<Error_404 />} />
         </Routes>
       </div>
     </ThemeContext.Provider>

@@ -1,4 +1,4 @@
-/* @import url('https: //fonts.google.com/specimen/Nunito+Sans'); */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,6 +8,6 @@
 
   html {
     -webkit-tap-highlight-color: transparent;
-    font-family:'Nunito', serif;
+    font-family: 'Nunito Sans', sans-serif;
   }
 }

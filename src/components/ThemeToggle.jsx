@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import sun from "../assets/sun_icon.png";
 import moon from "../assets/_moon_icon.png";
 import { ThemeContext } from "../App";
@@ -14,13 +15,17 @@ function ThemeToggle({ toggletheme, themeText }) {
         theme === "Dark" ? `${style} bg-DarkBlue` : `${style} bg-White`
       }
     >
+      <Link to="/">
         <h1 className="font-extrabold">Where in the world?</h1>
-      <div className="flex gap-x-1 items-center">
+      </Link>
+      <div
+        onClick={toggletheme}
+        className="flex gap-x-1 items-center cursor-pointer"
+      >
         <img
-          onClick={toggletheme}
           src={theme === "Dark" ? moon : sun}
           alt="theme"
-          className="w-8 h-8 cursor-pointer"
+          className="w-8 h-8 "
         />
         <p>{themeText}</p>
       </div>

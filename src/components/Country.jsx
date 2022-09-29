@@ -4,8 +4,7 @@ import { ThemeContext } from "../App";
 function Country({ country }) {
   const theme = useContext(ThemeContext);
   const styles = "font-light";
- 
-  let population = country.population.toLocaleString()
+  let population = country.population.toLocaleString();
 
   return (
     <div className="mt-5 w-full h-auto border rounded-md shadow-md lg:w-[18rem]  md:hover:scale-110 md:hover:ease-in-out  md:hover:duration-500 ">
