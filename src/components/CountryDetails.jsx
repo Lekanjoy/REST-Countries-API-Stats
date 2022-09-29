@@ -131,7 +131,7 @@ function CountryDetails() {
                         })}
                       </span>
 
-                      <span className="font-bold">
+                      <span>
                         {languageArr.length === 1
                           ? "Language: "
                           : "Languages: "}
