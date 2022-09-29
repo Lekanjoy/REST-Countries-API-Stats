@@ -3,7 +3,13 @@ import { ThemeContext } from "../App";
 import Refresh_dark from "../assets/refresh_dark.png";
 import Refresh_light from "../assets/refresh_light.png";
 
-function FilterBar({ filterTerm, setGetCountries }) {
+function FilterBar({
+  setGetCountry,
+  setGetRegion,
+  filterTerm,
+  setGetCountries,
+  getAllCountriesData,
+}) {
   const theme = useContext(ThemeContext);
   const [isRefreshed, setIsRefreshed] = useState(false);
 
@@ -16,27 +22,30 @@ function FilterBar({ filterTerm, setGetCountries }) {
 
   const handleRefresh = () => {
     setIsRefreshed((prevState) => !prevState);
+    setGetCountry("");
+    setGetRegion("");
+    let search = document.getElementById("search");
+    search.value = "";
+    let filter = document.getElementById("filter");
+    filter.value = "Filter by Region";
   };
 
   useEffect(() => {
-    fetch(`https://restcountries.com/v3.1/all`)
-      .then((res) => res.json())
-      .then((data) => {
-        setGetCountries(data);
-        // console.log(data);
-      })
-      .catch((err) => console.error(err));
+  getAllCountriesData();
   }, [isRefreshed]);
 
   return (
     <div className="flex gap-x-3 items-center ">
       <select
+        id="filter"
         onChange={handleFilter}
         className={
           theme === "Dark" ? `${style} bg-DarkBlue` : `${style} bg-White`
         }
       >
-        <option value=" ">Filter by Region</option>
+        <option disabled selected>
+          Filter by Region
+        </option>
         <option value="Africa">Africa</option>
         <option value="America">America</option>
         <option value="Asia">Asia</option>

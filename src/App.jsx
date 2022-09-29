@@ -27,14 +27,14 @@ function App() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const style = "App w-full h-full  px-6 pb-6 relative lg:px-12";
+  const style = "App w-full min-h-screen  px-6 pb-6 relative lg:px-12";
 
   return (
     <ThemeContext.Provider value={theme}>
       <div
         className={
           theme === "Dark"
-            ? `${style} bg-VeryDarkBlue  text-White `
+            ? `${style} bg-VeryDarkBlue  text-White`
             : `${style} bg-VeryLightGray text-VeryDarkBlue`
         }
       >
@@ -44,8 +44,16 @@ function App() {
           themeText={themeText}
         />
         <Routes>
-          <Route path="/" element={<Countries />} />
-          <Route path="/detail" element={<CountryDetails />} />
+          <Route index path="/" element={<Countries />} />
+          <Route path="/detail/:countryCode" element={<CountryDetails />} />
+          <Route
+            path="*"
+            element={
+              <h1 className="pt-[40vh] h-screen text-4xl font-bold text-center">
+                404 Page
+              </h1>
+            }
+          />
         </Routes>
       </div>
     </ThemeContext.Provider>
