@@ -46,7 +46,7 @@ function Countries() {
       console.error(error);
     }
   }
-
+// Getting Data for all country
   async function getAllCountriesData() {
     try {
       let res = await fetch(`https://restcountries.com/v3.1/all`);
@@ -58,7 +58,7 @@ function Countries() {
     }
   }
 
-  // Fetching Countries Data
+  // Fetching Country(ies) Data
   useEffect(() => {
     if (getCountry === "" && getRegion === "") {
       getAllCountriesData();
@@ -74,7 +74,6 @@ function Countries() {
       <div className="w-full md:flex justify-between items-center  md:pt-32">
         <SearchBar searchTerm={(term) => setGetCountry(term)} />
         <FilterBar
-          setGetCountries={setGetCountries}
           filterTerm={(term) => setGetRegion(term)}
           setGetCountry={setGetCountry}
           setGetRegion={setGetRegion}

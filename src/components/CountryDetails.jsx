@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ThemeContext } from "../App";
 import previous_light from "../assets/back-light.png";
 import previous_dark from "../assets/back-dark.png";
+import spinner from '../assets/spinner.gif'
 
 function CountryDetails() {
   const [country, setCountry] = useState([]);
@@ -50,9 +51,7 @@ function CountryDetails() {
       </Link>
 
       {isLoading ? (
-        <h1 className="text-4xl h-[85vh] grid place-items-center">
-          LOADING !!!
-        </h1>
+        <img src={spinner} alt="loading-spinner" className="w-12 h-12 mx-auto relative top-[25vh]"/>
       ) : (
         <div className="flex flex-col flex-1 gap-x-8  w-full  mt-16 md:flex-row  md:justify-between md:items-center lg:gap-x-6">
           <div className=" w-full md:w-1/2">

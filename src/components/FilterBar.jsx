@@ -7,7 +7,6 @@ function FilterBar({
   setGetCountry,
   setGetRegion,
   filterTerm,
-  setGetCountries,
   getAllCountriesData,
 }) {
   const theme = useContext(ThemeContext);
